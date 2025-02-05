@@ -1,5 +1,5 @@
 
-const CONTENTS_PATH = '/assets/contents';
+const CONTENTS_PATH = './assets/contents';
 const CONTENTS_ELEMENT = document.querySelector('.contents .card .card-contents')
 
 function showData(name, data){
