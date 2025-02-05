@@ -1,0 +1,242 @@
+:root {
+  --colorHover: #ff006a;
+  --white-color: #dedede;
+  --bg: #0b0b0b;
+  --floatBgColor: rgba(0, 0, 0, 0.3);
+  --primary-color: #57a0ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  text-decoration: none;
+}
+
+html {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  font-family: "Poppins", sans-serif;
+  background-color: var(--bg);
+  color: var(--white-color);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.banner {
+  padding: 0.3em;
+  border-radius: 15px;
+  display: flex;
+  position: relative;
+  align-items: center;
+  margin-bottom: 1em;
+  border: 2px solid transparent;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  -webkit-text-stroke: 1px var(--primary-color);
+  color: transparent;
+  transition: 0.4s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+
+.banner:hover {
+  color: var(--primary-color);
+  -webkit-text-stroke: 1px transparent;
+}
+
+.banner .eagleblue-logo {
+  width: 100px;
+  height: 100px;
+  margin-right: 1.2em;
+  border-radius: 20px;
+}
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 15px;
+}
+
+.contents .card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 0.3em;
+  color: var(--white-color);
+  text-align: center;
+  max-width: 650px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(252, 74, 225, 0.2);
+  overflow: hidden;
+}
+.contents .card::after,
+.contents .card::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 130%;
+  top: -80%;
+  left: -50%;
+  background: linear-gradient(180deg, transparent, #006eff, red);
+  transform-origin: bottom right;
+  animation: SpinSaber 3s linear infinite;
+  box-shadow: 22px -12px 25px #006eff, 0px 24px 30px red;
+}
+
+.contents .card .card-contents {
+  background-color: var(--bg);
+  border-radius: 15px;
+  z-index: 1;
+}
+
+.disclaimer {
+  text-align: center;
+  padding: 0.6em;
+  background-color: #3e110f;
+  border-radius: 15px;
+  line-height: 1.5;
+  letter-spacing: 2px;
+  margin-bottom: 0.6em;
+}
+
+.disclaimer .disclaimer-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1em;
+}
+
+.contents .disclaimer .disclaimer-summary {
+  margin-bottom: 0.5em;
+}
+.contents .disclaimer .disclaimer-btn {
+  background: none;
+  color: var(--primary-color);
+  font-size: 15px;
+  font-family: inherit;
+  cursor: pointer;
+  user-select: text;
+}
+
+.contents .confirm-label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  padding: 0.3em;
+}
+
+#agreeCheckbox {
+  margin-right: 0.4em;
+}
+
+.contents .link-containers {
+  padding: 0.4em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.contents .link-containers .link-title {
+  margin-top: 0.6em;
+}
+.contents .link-containers .link-list {
+  text-align: center;
+  color: var(--primary-color);
+}
+.contents .link-containers .link-list li {
+  list-style: none;
+  text-decoration: underline;
+  margin-bottom: 0.3em;
+}
+.contents .link-containers .link-list li:hover,
+.contents .disclaimer .disclaimer-btn:hover {
+  color: var(--colorHover);
+}
+.disclaimer-overlay.active {
+  backdrop-filter: blur(3px);
+  scale: 1;
+}
+.disclaimer-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: var(--floatBgColor);
+  z-index: 3;
+  scale: 0;
+  backdrop-filter: blur(0px);
+  transition: scale 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+.disclaimer-container {
+  line-height: 1.5;
+  letter-spacing: 2px;
+  width: 550px;
+  max-height: 500px;
+  padding: 1em;
+  background-color: rgba(6, 12, 17, 0.85);
+  border: 2px solid var(--white-color);
+  border-radius: 5px;
+  overflow-y: auto;
+}
+.disclaimer-overlay .close-btn {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--white-color);
+  font-size: 35px;
+  cursor: pointer;
+}
+
+footer .contacts-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 1em;
+  width: 100%;
+}
+
+.insta-icon {
+  stroke: #ff006a;
+}
+
+.warning-icon {
+  width: 40px;
+  height: 40px;
+}
+
+.disclaimer-heading {
+  text-align: center;
+  color: rgb(255, 230, 0);
+}
+
+.contact-link {
+  display: inline;
+}
+
+@keyframes SpinSaber {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
