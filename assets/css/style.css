@@ -290,7 +290,6 @@ footer .contacts-container {
   scale: 1.4;
   rotate: 360deg;
   stroke: #006eff;
-  animation: blurEffect 0.4s var(--cubic-superfast-in);
 }
 
 .card1 .card-contents .link-containers .link-list li:hover,
@@ -308,17 +307,11 @@ footer .contacts-container {
   .disclaimer-summary {
     max-width: 300px;
   }
-  .card2 {
+  .confirm-label {
     max-width: 300px;
   }
-}
-
-@keyframes blurEffect {
-  0% {
-    filter: blur(2px);
-  }
-  100% {
-    filter: blur(0px);
+  .card2 {
+    max-width: 300px;
   }
 }
 
