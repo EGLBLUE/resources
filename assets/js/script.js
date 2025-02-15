@@ -1,6 +1,7 @@
 
 const CONTENTS_PATH = './assets/contents';
-const CONTENTS_ELEMENT = document.querySelector('.contents .card .card-contents')
+const CONTENTS_ELEMENT = document.querySelector('.card1 .card-contents')
+const DISCLAIMER_SUMMARY = new WeakMap();
 
 function showData(name, data){
     const container = document.querySelector('.link-containers');
@@ -33,12 +34,13 @@ function initLinkContainer(){
 }
 
 async function fetchDataLinks(){
-    const agreeCheckbox = document.getElementById('agreeCheckbox');
+    let agreeCheckbox = document.getElementById('agreeCheckbox');
     if (!agreeCheckbox){
         const result = await makeConfirmCheckbox();
         if (!result){
             return
         }
+        agreeCheckbox = document.getElementById('agreeCheckbox');
     }
     if (!agreeCheckbox.checked){
         return
@@ -62,34 +64,88 @@ function removeDataLinks(){
     linkContainer.remove();
 }
 
-function disclaimerOverlayContent(){
-    const disclaimerBtn = document.querySelector('.contents .disclaimer .disclaimer-btn');
-    const disclaimerOverlay = document.querySelector('.disclaimer-overlay');
-    const disclaimerContainer = document.querySelector('.disclaimer-overlay .disclaimer-container');
-    const closeDisclaimerBtn = document.querySelector('.disclaimer-overlay .close-btn');
+function switchBtnDelay(button, delay) {
+    button.disabled = true;
+    setTimeout(() => {
+        button.disabled = false;
+    }, delay);
+}
+
+function resetRotate(card, delay){
+    setTimeout(() => {
+        card.style.transform = 'rotateY(-90deg)';
+    }, delay);
+}
+
+function showCard1(card1Rotate, card2Rotate, transitionDelay, delay){
+    const card2 = document.querySelector('.card2');
+    const card1 = document.querySelector('.card1');
+    const readMoreBtn = document.querySelector('.readmore-btn');
+    const okBtn = document.querySelector('.ok-btn');
+
+    okBtn.classList.add('hide-btn-switch');
+    readMoreBtn.classList.remove('hide-btn-switch');
+    card1.style.transitionDelay = transitionDelay;
+    card1.classList.remove('hide-card');
+    card1.style.transform = card1Rotate;
     
+    card2.classList.add('hide-card');
+    card2.style.transitionDelay = '0s';
+    card2.style.transform = card2Rotate;
+
+    resetRotate(card2, delay);
+    switchBtnDelay(readMoreBtn, 600);
+}
+
+function showCard2(card1Rotate, card2Rotate, transitionDelay, delay){
+    const card2 = document.querySelector('.card2');
+    const card1 = document.querySelector('.card1');
+    const readMoreBtn = document.querySelector('.readmore-btn');
+    const okBtn = document.querySelector('.ok-btn');
+
+    card2.classList.remove('hide-card');
+    readMoreBtn.classList.add('hide-btn-switch');
+    okBtn.classList.remove('hide-btn-switch');
+    card2.style.transform = card2Rotate;
+    card2.style.transitionDelay = transitionDelay;
+
+    card1.style.transitionDelay = '0s';
+    card1.classList.add('hide-card');
+    card1.style.transform = card1Rotate;
+
+    resetRotate(card1, delay);
+    switchBtnDelay(okBtn, 600);
+}
+
+function initSwitchCard(){
+    const card2 = document.querySelector('.card2');
+    const readMoreBtn = document.querySelector('.readmore-btn');
+    const okBtn = document.querySelector('.ok-btn');
+
     const disclaimerContent = document.createElement('p');
     disclaimerContent.className = "disclaimer-content";
-    disclaimerContainer.appendChild(disclaimerContent);
+    card2.appendChild(disclaimerContent);
+    
+    card2.style.transform = 'rotateY(-90deg)';
 
-    disclaimerBtn.onclick = () => {
-        disclaimerOverlay.classList.toggle('active');
-        
-        if (disclaimerOverlay.classList.contains('active')) {
-            document.addEventListener('keydown', closeOnEscape);
-        } else {
-            document.removeEventListener('keydown', closeOnEscape);
-        }
-    };
-    closeDisclaimerBtn.onclick = () => {
-        disclaimerOverlay.classList.remove('active');
-    };
+    let card2Rotate = 'rotateY(0deg)';
+    let card1Rotate = 'rotateY(90deg)';
+    const transitionDelay = '0.1s';
+    const delay = 300;
 
-    function closeOnEscape(event) {
-        if (event.key === 'Escape') {
-            disclaimerOverlay.classList.remove('active');
-            document.removeEventListener('keydown', closeOnEscape);
-        }
+    okBtn.onclick = () => {
+        showCard1(card1Rotate, card2Rotate, transitionDelay, delay);
+        card2Rotate = 'rotateY(0deg)';
+        card1Rotate = 'rotateY(90deg)';
+        const text = DISCLAIMER_SUMMARY.get(window);
+        typeWriter(document.querySelector('.card1 .disclaimer'), text);
+    }
+
+    readMoreBtn.onclick = () => {
+        showCard2(card1Rotate, card2Rotate, transitionDelay, delay);
+        card2Rotate = 'rotateY(90deg)';
+        card1Rotate = 'rotateY(0deg)';
+        clearWritter(document.querySelector('.disclaimer-summary'));
     }
 }
 
@@ -116,17 +172,15 @@ async function fetchDisclaimerSummary() {
         if (!response.ok) {
             throw new Error('File not found');
         }
-        const disclaimer = document.querySelector('.contents .card .card-contents .disclaimer');
+        const disclaimer = document.querySelector('.card1 .disclaimer');
         const data = await response.text();
-        const disclaimerSummary = document.createElement('p');
 
-        disclaimerSummary.className = "disclaimer-summary";
-        disclaimerSummary.textContent = data;
-        disclaimer.insertBefore(disclaimerSummary, document.querySelector('.disclaimer-btn'));
+        typeWriter(disclaimer, data)
+        DISCLAIMER_SUMMARY.set(window, data)
         return true;
     } catch (error) {
         console.error('Error fetching disclaimer summary:', error);
-        return false;
+        return p;
     }
 }
 
@@ -151,17 +205,74 @@ async function makeConfirmCheckbox() {
         agreeCheckbox.addEventListener("change", function () {
             if (this.checked) {
                 fetchDataLinks();
+                label.classList.add('checked');
             } else {
                 removeDataLinks();
+                label.classList.remove('checked');
             }
         });
         return true;
     }
 }
 
-function loadContents(){
-    disclaimerOverlayContent();
+function getLogo(){
+    const img = new Image();
+    img.src = "/assets/images/logo.png"
+    img.onload = () => {
+        document.querySelector('.eagleblue-logo').src = img.src;
+    }
+}
 
+function clearWritter(element){
+    setTimeout(() => {
+        element.remove();
+    }, 400);
+}
+
+function typeWriter(element, text) {
+    const typingText = document.createElement('div');
+    typingText.className = "disclaimer-summary";
+    element.append(typingText);
+    
+    let i = 0;
+    let c = 0;
+    let duration = 5;
+    let newline = false;
+    let span;
+    let char;
+    function write() {
+        if (i < text.length) {
+            char = text[i]
+            if (newline){
+                newline = false
+                span = document.createElement('div');
+            }else{
+                if (char === ' '){
+                    span = document.createElement('span');
+                }
+                else if (char === '.'){
+                    span = document.createElement('p');
+                    newline = true;
+                }
+                else{
+                    span = document.createElement('p');
+                }
+            }
+            span.textContent += char;
+            typingText.appendChild(span);
+            i++;
+            if (c<duration){
+                c++;
+            }
+            setTimeout(write, c);
+        }
+    }
+    write();
+}
+
+function loadContents(){
+    getLogo();
+    initSwitchCard();
     try {
         fetchDataLinks();
     } catch (error) {

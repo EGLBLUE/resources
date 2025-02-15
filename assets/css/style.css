@@ -4,6 +4,7 @@
   --bg: #0b0b0b;
   --floatBgColor: rgba(0, 0, 0, 0.3);
   --primary-color: #57a0ff;
+  --cubic-superfast-in: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 * {
@@ -45,13 +46,16 @@ a {
   align-items: center;
   margin-bottom: 1em;
   border: 2px solid transparent;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
-  -webkit-text-stroke: 1px var(--primary-color);
-  color: transparent;
-  transition: 0.4s cubic-bezier(0.39, 0.575, 0.565, 1);
+  gap: 1em;
 }
 
-.banner:hover {
+.banner .banner-title {
+  -webkit-text-stroke: 1px var(--primary-color);
+  color: transparent;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: 0.4s cubic-bezier(0.39, 0.575, 0.565, 1);
+}
+.banner .banner-title:hover {
   color: var(--primary-color);
   -webkit-text-stroke: 1px transparent;
 }
@@ -59,7 +63,6 @@ a {
 .banner .eagleblue-logo {
   width: 100px;
   height: 100px;
-  margin-right: 1.2em;
   border-radius: 20px;
 }
 
@@ -68,23 +71,39 @@ a {
   flex-direction: column;
   align-items: center;
   border-radius: 15px;
+  height: 580px;
+  animation: XShake 0.4s var(--cubic-superfast-in) forwards;
 }
 
-.contents .card {
+.wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 380px;
+  perspective: 1000px;
+  margin-bottom: 1em;
+}
+
+.card1 {
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
   padding: 0.3em;
   color: var(--white-color);
-  text-align: center;
   max-width: 650px;
   border-radius: 15px;
   box-shadow: 0 0 10px rgba(252, 74, 225, 0.2);
   overflow: hidden;
+  filter: blur(0px);
+  scale: 1;
+  transition: 0.4s var(--cubic-superfast-in);
 }
-.contents .card::after,
-.contents .card::before {
+
+.contents .card1::after,
+.contents .card1::before {
   content: "";
   position: absolute;
   width: 100%;
@@ -97,114 +116,150 @@ a {
   box-shadow: 22px -12px 25px #006eff, 0px 24px 30px red;
 }
 
-.contents .card .card-contents {
+.contents .card1 .card-contents {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   background-color: var(--bg);
   border-radius: 15px;
   z-index: 1;
 }
 
-.disclaimer {
-  text-align: center;
+.card1 .disclaimer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 0.6em;
   background-color: #3e110f;
   border-radius: 15px;
   line-height: 1.5;
   letter-spacing: 2px;
-  margin-bottom: 0.6em;
 }
 
-.disclaimer .disclaimer-header {
+.card1 .disclaimer .disclaimer-summary {
+  margin-bottom: 0.5em;
+  min-height: 100px;
+  width: 600px;
+}
+
+.card1 .disclaimer .disclaimer-summary span {
+  display: inline-block;
+  margin-right: 0.3em;
+}
+.card1 .disclaimer .disclaimer-summary p {
+  display: inline-block;
+  transform: scale(0);
+  opacity: 0;
+  transform-origin: left center;
+  animation: typingAnimation 1s ease-out forwards;
+}
+
+.card1 .disclaimer .disclaimer-header {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1em;
 }
 
-.contents .disclaimer .disclaimer-summary {
-  margin-bottom: 0.5em;
-}
-.contents .disclaimer .disclaimer-btn {
-  background: none;
-  color: var(--primary-color);
-  font-size: 15px;
-  font-family: inherit;
-  cursor: pointer;
-  user-select: text;
-}
-
-.contents .confirm-label {
+.confirm-label {
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 13px;
   padding: 0.3em;
+  cursor: pointer;
+  gap: 0.6em;
+}
+.confirm-label.checked {
+  color: var(--primary-color);
+}
+.confirm-label.checked:hover {
+  color: red;
+}
+.confirm-label:hover {
+  color: #ff006a;
 }
 
-#agreeCheckbox {
-  margin-right: 0.4em;
-}
-
-.contents .link-containers {
+.card1 .card-contents .link-containers {
   padding: 0.4em;
   display: flex;
   flex-direction: column;
   align-items: center;
+  animation: YShake 0.4s var(--cubic-superfast-in) forwards;
 }
-.contents .link-containers .link-title {
+.card1 .card-contents .link-containers .link-title {
   margin-top: 0.6em;
 }
-.contents .link-containers .link-list {
+.card1 .card-contents .link-containers .link-list {
   text-align: center;
   color: var(--primary-color);
 }
-.contents .link-containers .link-list li {
+.card1 .card-contents .link-containers .link-list li {
   list-style: none;
   text-decoration: underline;
   margin-bottom: 0.3em;
 }
-.contents .link-containers .link-list li:hover,
-.contents .disclaimer .disclaimer-btn:hover {
-  color: var(--colorHover);
-}
-.disclaimer-overlay.active {
-  backdrop-filter: blur(3px);
-  scale: 1;
-}
-.disclaimer-overlay {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+.card2 {
   position: absolute;
-  right: 0;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  background-color: var(--floatBgColor);
-  z-index: 3;
-  scale: 0;
-  backdrop-filter: blur(0px);
-  transition: scale 0.2s cubic-bezier(0.39, 0.575, 0.565, 1);
+  transition: 0.4s var(--cubic-superfast-in);
+  width: 600px;
+  filter: blur(0px);
 }
+
 .disclaimer-container {
   line-height: 1.5;
   letter-spacing: 2px;
-  width: 550px;
-  max-height: 500px;
   padding: 1em;
   background-color: rgba(6, 12, 17, 0.85);
   border: 2px solid var(--white-color);
   border-radius: 5px;
   overflow-y: auto;
 }
-.disclaimer-overlay .close-btn {
-  position: absolute;
-  top: 5px;
-  right: 10px;
+
+.disclaimer-heading {
+  color: rgb(255, 230, 0);
+}
+
+.hide-card {
+  opacity: 0;
+  filter: blur(10px);
+}
+
+.switch-btn {
   background: none;
-  border: none;
-  color: var(--white-color);
-  font-size: 35px;
+  color: var(--primary-color);
+  font-size: 13px;
+  font-family: inherit;
+  padding: 0.3em;
   cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  user-select: text;
+  animation: XShake 0.4s var(--cubic-superfast-in) forwards;
+  min-width: 130px;
+}
+.switch-btn::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  border-bottom: none;
+  transition: width 0.4s ease-in-out;
+}
+
+.switch-btn:hover::before {
+  width: 100%;
+  left: 0;
+  border-bottom: 1px solid #ff006a;
+}
+
+.hide-btn-switch {
+  display: none;
 }
 
 footer .contacts-container {
@@ -216,6 +271,8 @@ footer .contacts-container {
 
 .insta-icon {
   stroke: #ff006a;
+  transition: 0.4s var(--cubic-superfast-in);
+  filter: blur(0);
 }
 
 .warning-icon {
@@ -223,13 +280,46 @@ footer .contacts-container {
   height: 40px;
 }
 
-.disclaimer-heading {
-  text-align: center;
-  color: rgb(255, 230, 0);
+.contact-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: XShake 0.4s ease-in-out forwards;
+}
+.insta-icon:hover {
+  scale: 1.4;
+  rotate: 360deg;
+  stroke: #006eff;
+  animation: blurEffect 0.4s var(--cubic-superfast-in);
 }
 
-.contact-link {
-  display: inline;
+.card1 .card-contents .link-containers .link-list li:hover,
+.switch-btn:hover {
+  color: var(--colorHover);
+}
+
+@media (orientation: portrait) {
+  .wrapper {
+    font-size: 13px;
+  }
+  .card1 {
+    max-width: 370px;
+  }
+  .disclaimer-summary {
+    max-width: 300px;
+  }
+  .card2 {
+    max-width: 300px;
+  }
+}
+
+@keyframes blurEffect {
+  0% {
+    filter: blur(2px);
+  }
+  100% {
+    filter: blur(0px);
+  }
 }
 
 @keyframes SpinSaber {
@@ -238,5 +328,93 @@ footer .contacts-container {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes typingAnimation {
+  0% {
+    filter: blur(2px);
+    transform: scale(0);
+    transform: rotate(90deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 1;
+  }
+  100% {
+    filter: blur(0);
+    transform: scale(1);
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes YShake {
+  0% {
+    filter: blur(20px);
+    transform: translateY(8%);
+  }
+  30% {
+    transform: translateY(-8%);
+  }
+  60% {
+    transform: translateY(8%);
+  }
+  100% {
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes XShake {
+  0% {
+    filter: blur(20px);
+    transform: translateX(8%);
+  }
+  30% {
+    transform: translateX(-8%);
+  }
+  60% {
+    transform: translateX(8%);
+  }
+  100% {
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes flashSwipe {
+  0% {
+    transform: translateX(100%);
+    filter: drop-shadow(-15px 0px 5px #57a0ff) blur(20px);
+  }
+  100% {
+    transform: translateX(0);
+    filter: drop-shadow(0px 0px 0px transparent) blur(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleToX {
+  from {
+    opacity: 0;
+    filter: blur(20px);
+    transform: scaleX(0.3);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scaleX(1);
   }
 }

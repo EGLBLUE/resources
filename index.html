@@ -9,30 +9,33 @@
     <title>Eagle Blue - Resources</title>
   </head>
   <body>
-    <div class="disclaimer-overlay">
-      <button class="close-btn">&times;</button>
-      <div class="disclaimer-container">
-        <h2 class="disclaimer-heading">DISCLAIMER</h2>
-      </div>
-    </div>
-    
     <main class="contents">
       <a class="banner" href="https://eglblue.github.io">
-        <img class="eagleblue-logo" src="/assets/images/logo.png" alt="Eagle Blue Logo">
-        <h1 class="title">EAGLE BLUE</h1>
+        <img class="eagleblue-logo" alt="Eagle Blue Logo">
+        <h1 class="banner-title">EAGLE BLUE</h1>
       </a>
-
-      <div class="card">
-        <div class="card-contents">
-          <div class="disclaimer">
-            <div class="disclaimer-header">
-              <svg class="warning-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="yellow" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-              <h2 class="disclaimer-heading">DISCLAIMER</h2>
+      <div class="wrapper">
+        <div class="card1">
+          <div class="card-contents">
+            <div class="disclaimer">
+              <div class="disclaimer-header">
+                <svg class="warning-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="yellow" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-triangle"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                <h2 class="disclaimer-heading">DISCLAIMER</h2>
+              </div>
             </div>
-            <button class="disclaimer-btn">Read more...</button>
+          </div>
+        </div>
+        <div class="card2 hide-card">
+          <div class="disclaimer-container">
+            <h2 class="disclaimer-heading">DISCLAIMER</h2>
+            <p class="disclaimer-content"></p>
           </div>
         </div>
       </div>
+      <button class="ok-btn switch-btn hide-btn-switch">Back</button>
+      <button class="switch-btn readmore-btn">
+        <span>See Disclaimer</span>
+      </button>
     </main>
     <script src="./assets/js/script.js"></script>
   </body>
