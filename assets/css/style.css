@@ -54,16 +54,19 @@ a {
   color: transparent;
   transition: background-color 0.3s ease, border-color 0.3s ease;
   transition: 0.4s cubic-bezier(0.39, 0.575, 0.565, 1);
+  filter: drop-shadow(4px -4px 2px #4444dd);
 }
 .banner .banner-title:hover {
   color: var(--primary-color);
   -webkit-text-stroke: 1px transparent;
+  filter: drop-shadow(0 0 0 transparent);
 }
 
 .banner .eagleblue-logo {
   width: 100px;
   height: 100px;
   border-radius: 20px;
+  box-shadow: 0 0 10px rgba(74, 166, 252, 0.269);
 }
 
 .contents {
@@ -95,9 +98,8 @@ a {
   color: var(--white-color);
   max-width: 650px;
   border-radius: 15px;
-  box-shadow: 0 0 10px rgba(252, 74, 225, 0.2);
+  box-shadow: 0 0 10px rgba(252, 74, 225, 0.31);
   overflow: hidden;
-  filter: blur(0px);
   scale: 1;
   transition: 0.4s var(--cubic-superfast-in);
 }
