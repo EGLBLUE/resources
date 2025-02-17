@@ -207,7 +207,6 @@ a {
   position: absolute;
   transition: 0.4s var(--cubic-superfast-in);
   width: 600px;
-  filter: blur(0px);
 }
 
 .disclaimer-container {
@@ -226,7 +225,6 @@ a {
 
 .hide-card {
   opacity: 0;
-  filter: blur(10px);
 }
 
 .switch-btn {
@@ -343,7 +341,6 @@ footer .contacts-container {
 
 @keyframes YShake {
   0% {
-    filter: blur(20px);
     transform: translateY(8%);
   }
   30% {
@@ -354,13 +351,11 @@ footer .contacts-container {
   }
   100% {
     transform: translateY(0);
-    filter: blur(0);
   }
 }
 
 @keyframes XShake {
   0% {
-    filter: blur(20px);
     transform: translateX(8%);
   }
   30% {
@@ -371,7 +366,6 @@ footer .contacts-container {
   }
   100% {
     transform: translateX(0);
-    filter: blur(0);
   }
 }
 
@@ -400,12 +394,10 @@ footer .contacts-container {
 @keyframes scaleToX {
   from {
     opacity: 0;
-    filter: blur(20px);
     transform: scaleX(0.3);
   }
   to {
     opacity: 1;
-    filter: blur(0);
     transform: scaleX(1);
   }
 }
