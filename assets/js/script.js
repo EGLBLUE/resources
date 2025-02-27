@@ -217,7 +217,7 @@ async function makeConfirmCheckbox() {
 
 function getLogo(){
     const img = new Image();
-    img.src = "/assets/images/logo.png"
+    img.src = "/assets/images/monogram-logo.webp"
     img.onload = () => {
         document.querySelector('.eagleblue-logo').src = img.src;
     }
